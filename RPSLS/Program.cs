@@ -9,10 +9,8 @@ namespace RPSLS
         
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Gestures gestures = new Gestures();
-            gestures.test();
-            
+            Game game = new Game();
+            game.bestTwoOfThreeMP();
         }
 
     }

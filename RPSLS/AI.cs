@@ -4,7 +4,26 @@ using System.Text;
 
 namespace RPSLS
 {
-    class AI
+    class AI : Player
     {
+        Random random;
+        public AI()
+        {
+            random = new Random();
+            assignAIPlayerValues();
+        }
+
+        public void assignAIPlayerValues() 
+        {
+            playerName = "COMPUTER";
+            score = 0;
+            playerID = 01110111; //w in bianary
+        }
+        public int generateMyChoice() 
+        {
+            int choice = 0;
+            random.Next(0, listofGestures.Count);
+            return choice;
+        }
     }
 }
