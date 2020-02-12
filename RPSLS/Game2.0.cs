@@ -11,6 +11,7 @@ namespace RPSLS
         Validation val;
         int roundCount;
         bool runnGame;
+        int numberOfRoundsRequired;
         int gamemode;
         int numberOfPlayers;
         public Game2()
@@ -31,16 +32,24 @@ namespace RPSLS
             gamemode = 100;
             numberOfPlayers = 0;
             roundCount = 0;
+            numberOfRoundsRequired = 0;
+            Console.Clear();
         }
         public void Start() 
         {
-            flushValues();
-            DisplayWelcomeMesssage();
-            DisplayGameRules();
-            DisplayGamemodePrompt();
-            DecideWhatGameToLaunch();
-            DisplayPlayerlist();
-            GameRun();
+
+            while (runnGame == true) 
+            {
+                flushValues();
+                DisplayWelcomeMesssage();
+                DisplayGameRules();
+                DisplayGamemodePrompt();
+                DecideWhatGameToLaunch();
+                DisplayPlayerlist();
+                GameRun();
+                DisplayPlayAgain();
+            }
+            
         }
         public void DisplayGamemodePrompt() 
         {
@@ -178,21 +187,65 @@ namespace RPSLS
                 Console.WriteLine($"{playerList[i].name} : {playerList[i].score}");
             }
         }
+        private void DisplayWinner(Players winningPlayer)
+        {
+            Console.WriteLine($"Congrats {winningPlayer.name} you won the game with a score of {winningPlayer.score}!");
+        }
+        private void DisplayPlayAgain() 
+        {
+            Console.WriteLine("Play Again?");
+            Console.WriteLine("1. YES");
+            Console.WriteLine("2. NO");
+            int choice = 0;
+            choice = val.uservalidation(1, 2, Console.ReadLine());
+            while (val.NegativeNumberValidation(choice)) 
+            {
+                Console.WriteLine("Please use a non negative number!");
+                choice = val.uservalidation(1, 2, Console.ReadLine());
+            }
+
+            if (choice == 1) { runnGame = true; }
+            else if (choice == 2) { runnGame = false; }
+        }
         private void GameRun() 
         {
-            
+            //check the gamemodes
+            if (gamemode < 3)
+            {
+                int NscoreRequired = 0;
+                NscoreRequired = ((numberOfPlayers - 1) * 2); // For Best 2 of 3 style
+                bool runThisGame = true;
+                while (runThisGame == true)
+                {
+                    runThisGame = LaunchBest2of3Style(NscoreRequired, runThisGame);
+                }
+            }// Will run Best 2 of 3 style
+            else if (gamemode == 4) { Console.WriteLine("BATTLE ROYALE IS NOT READY"); }//Will run battle royale logic
+        }
+        private bool LaunchBest2of3Style(int nscoreRequired, bool runthisgame) 
+        {
+            Console.Clear();
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 playerList[i].promptMyGesture();
                 Console.Clear();
             }
+            
             calculatePoints();
             DisplayPLayerPoints();
             Console.ReadLine();
-            
-          
 
-      
+            for (int i = 0; i<numberOfPlayers; i++) 
+            {
+                if (playerList[i].score >= nscoreRequired) 
+                {
+                    DisplayWinner(playerList[i]);
+                    runthisgame = false;
+                    break;
+                }
+            } // check if there is a winner.
+
+            return runthisgame;
         }
         private void calculatePoints() 
         {
@@ -215,6 +268,7 @@ namespace RPSLS
                 }
             }
         }
+        
 
     }
 }
