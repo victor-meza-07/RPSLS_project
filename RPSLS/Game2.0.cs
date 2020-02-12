@@ -48,7 +48,12 @@ namespace RPSLS
             Console.WriteLine("0. Player vs Player, you vs each other in a battle of witts");
             Console.WriteLine("1. Player vs Computer, you vs the computer in a battle of chance");
             Console.WriteLine("2. Computer vs Computer, you see what the monkeys at devCode are capable of");
-            int choice = val.uservalidation(0, 2, Console.ReadLine());
+            Console.WriteLine("3. Battle Royale");
+            int choice = val.uservalidation(0, 3, Console.ReadLine());
+            while (val.NegativeNumberValidation(choice)) 
+            {
+                choice = val.uservalidation(0, 3, Console.ReadLine());
+            }
             SetGamemode(choice);
             
         }
@@ -69,32 +74,72 @@ namespace RPSLS
             {
                 LaunchPlayervPlayer();
             }
-            else if (gamemode == 1) 
+            else if (gamemode == 1)
             {
                 LaunchPlayervComputer();
             }
-            else if (gamemode == 2) { Console.WriteLine("Not Ready"); }
+            else if (gamemode == 2) 
+            {
+                LaunchComputervsComputer();
+            }
+            else if (gamemode == 3) { Console.WriteLine("Not Ready"); }
         }
         private void LaunchPlayervPlayer() 
         {
+            int players = 0;
             Console.WriteLine("How many players will there be?");
-            int players = val.NumberValidation(Console.ReadLine());
+            players = val.NumberValidation(Console.ReadLine());
+            while (val.NegativeNumberValidation(players)) 
+            {
+                Console.WriteLine("How many players will there be?");
+                players = val.NumberValidation(Console.ReadLine());
+            }
             numberOfPlayers = players;
             AddPlayersPvP(players);
         }
         private void LaunchPlayervComputer() 
         {
-            Console.WriteLine("How Many Human PLayers will there be?");
-            int humanPlayers = val.NumberValidation(Console.ReadLine());
+            int humanPlayers = 0;
+            int computerPlayers = 0;
+            Console.WriteLine("How Many Human Players will there be?");
+            humanPlayers = val.NumberValidation(Console.ReadLine());
+            while (val.NegativeNumberValidation(humanPlayers)) 
+            {
+                Console.WriteLine("How Many Human Players will there be?");
+                humanPlayers = val.NumberValidation(Console.ReadLine());
+            }
             Console.WriteLine("How many computer players will there be?");
-            int computerPlayers = val.NumberValidation(Console.ReadLine());
+            computerPlayers = val.NumberValidation(Console.ReadLine());
+            while (val.NegativeNumberValidation(computerPlayers))
+            {
+                Console.WriteLine("How Many computer players will there be?");
+                computerPlayers = val.NumberValidation(Console.ReadLine());
+            }
             AddPlayersPvP(humanPlayers);
             addComputerPlayers(computerPlayers);
+            numberOfPlayers = humanPlayers + computerPlayers;
+        }
+        private void LaunchComputervsComputer() 
+        {
+            int computerPlayers = 0;
+            computerPlayers = val.NumberValidation(Console.ReadLine());
+            while (val.NegativeNumberValidation(computerPlayers))
+            {
+                Console.WriteLine("How Many computer players will there be?");
+                computerPlayers = val.NumberValidation(Console.ReadLine());
+            }
+            addComputerPlayers(computerPlayers);
+            numberOfPlayers = computerPlayers;
         }
         private void addComputerPlayers(int numberofAI) 
         {
-            int idToGive = -1000000;
+            int idToGive = -01110111;
             // METHOD THAT ADDS TO THIS ID
+            for (int i = 0; i < numberofAI; i++)
+            {
+                idToGive--;
+                playerList.Add(new Computer { name = $"Computer->{idToGive}", score = 0, gesture = new Gestures() });
+            }
         }
         private void AddPlayersPvP(int numberofPlayers) 
         {
@@ -135,6 +180,7 @@ namespace RPSLS
         }
         private void GameRun() 
         {
+            
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 playerList[i].promptMyGesture();
@@ -143,8 +189,11 @@ namespace RPSLS
             calculatePoints();
             DisplayPLayerPoints();
             Console.ReadLine();
-        }
+            
+          
 
+      
+        }
         private void calculatePoints() 
         {
             for (int i = 0; i < numberOfPlayers; i++)

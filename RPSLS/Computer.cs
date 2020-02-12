@@ -6,9 +6,12 @@ namespace RPSLS
 {
     class Computer : Players
     {
-        int ID;
+        Random random;
+        
         public Computer()
-        {}
+        {
+            random = new Random();
+        }
 
         public override void ResetMyScore()
         {
@@ -16,7 +19,15 @@ namespace RPSLS
         }
         public override void promptMyGesture()
         {
-            
+            int gestureChoice = 0;
+            gestureChoice = random.Next(0, listofGestures.Count);
+            foreach (Gestures g in listofGestures) 
+            {
+                if (g.gestureID == gestureChoice) 
+                {
+                    this.gesture = g;
+                }
+            }
         }
     }
 }

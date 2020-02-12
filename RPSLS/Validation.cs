@@ -162,5 +162,20 @@ namespace RPSLS
             }
             return validated;
         }
+        /// <summary>
+        /// Returns true if the int given is negative
+        /// </summary>
+        /// <param name="numberfetched"></param>
+        /// <returns></returns>
+        public virtual bool NegativeNumberValidation(int numberfetched) 
+        {
+            bool isitnegative = true;
+            if (numberfetched >= 0) 
+            {
+                isitnegative = false;
+            }
+
+            return isitnegative;
+        }
     }
 }

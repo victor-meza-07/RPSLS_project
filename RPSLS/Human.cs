@@ -25,6 +25,11 @@ namespace RPSLS
                 Console.WriteLine($"{g.gestureID}.{g.gestureName}");
             }
             int choice = val.uservalidation(listofGestures.Count, Console.ReadLine());
+            while (val.NegativeNumberValidation(choice))
+            {
+                Console.WriteLine("You can't select a move for someone else");
+                choice = val.NumberValidation(Console.ReadLine());
+            }
             foreach (Gestures g in listofGestures) 
             {
                 if (g.gestureID == choice) 
