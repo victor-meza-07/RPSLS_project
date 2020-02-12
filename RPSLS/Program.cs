@@ -9,12 +9,14 @@ namespace RPSLS
         
         static void Main(string[] args)
         {
-            Game game = new Game();
+            //BOTH VERSIONS WORK, USE game2.Start();
 
-            while (true) 
-            {
-                game.DisplayGameOptions();
-            }
+
+            Game game = new Game();
+            Game2 game2 = new Game2();
+
+
+            game2.Start();
             
         }
 

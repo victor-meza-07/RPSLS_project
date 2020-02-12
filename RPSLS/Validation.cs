@@ -13,7 +13,39 @@ namespace RPSLS
 
 
 
-        
+        /// <summary>
+        /// Returns a non negative int, based on the range given where min is the min choice and max is the max choice
+        /// </summary>
+        /// <param name="minChoice"></param>
+        /// <param name="maxChoice"></param>
+        /// <param name="userInput"></param>
+        /// <returns></returns>
+        public virtual int uservalidation(int minChoice, int maxChoice, string userInput)
+        {
+            int validated = 0;
+            bool validinput = false;
+            while (validinput == false)
+            {
+                try { validated = Convert.ToInt32(userInput); validinput = true; }
+                catch (FormatException)
+                {
+                    Console.WriteLine("User Choice was incorrect please input a valid option");
+                    userInput = Console.ReadLine();
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("User Choice was incorrect please input a valid option");
+                    userInput = Console.ReadLine();
+                }
+                if (((minChoice) > validated) || (validated > (maxChoice)))
+                {
+                    validinput = false;
+                    Console.WriteLine("User Choice was incorrect please input a valid option");
+                    userInput = Console.ReadLine();
+                }
+            }
+            return validated;
+        }
         /// <summary>
         /// returns a non negative integer that is in range of an array size
         /// </summary>
@@ -49,7 +81,6 @@ namespace RPSLS
             }
             return userchoiceasInt;
         }
-
         /// <summary>
         /// will return a non negative integer in range of list passed in
         /// </summary>
@@ -109,6 +140,26 @@ namespace RPSLS
             }
 
 
+            return validated;
+        }
+        public virtual int NumberValidation(string userInput) 
+        {
+            int validated = 0;
+            bool validinput = false;
+            while (validinput == false)
+            {
+                try { validated = Convert.ToInt32(userInput); validinput = true; }
+                catch (FormatException)
+                {
+                    Console.WriteLine("User Choice was incorrect please Enter an Integer");
+                    userInput = Console.ReadLine();
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("User Choice was incorrect please enter a non negative Integer");
+                    userInput = Console.ReadLine();
+                }
+            }
             return validated;
         }
     }
