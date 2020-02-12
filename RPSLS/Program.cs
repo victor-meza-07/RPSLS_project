@@ -10,7 +10,12 @@ namespace RPSLS
         static void Main(string[] args)
         {
             Game game = new Game();
-            game.bestTwoOfThreeMP();
+
+            while (true) 
+            {
+                game.DisplayGameOptions();
+            }
+            
         }
 
     }

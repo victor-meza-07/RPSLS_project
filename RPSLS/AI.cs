@@ -22,7 +22,7 @@ namespace RPSLS
         public int generateMyChoice() 
         {
             int choice = 0;
-            random.Next(0, listofGestures.Count);
+            choice = random.Next(0, listofGestures.Count);
             return choice;
         }
     }
