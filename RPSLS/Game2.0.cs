@@ -385,7 +385,15 @@ namespace RPSLS
                     playersleft++;
                 }
             }//Checks if there is 
-            Console.ReadLine();
+            string x = Console.ReadLine();
+            switch (x) 
+            {
+                case "00":
+                    runthisgame = false;
+                    break;
+                default:
+                    break;
+            }//Checks if you input 00 to exit the game 
 
             if (playersleft == 1) 
             {
