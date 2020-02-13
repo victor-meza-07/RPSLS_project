@@ -340,8 +340,11 @@ namespace RPSLS
             int highestscore = 0;
             for (int i = 0; i < playersleft; i++)
             {
-                playerList[i].promptMyGesture();
-                Console.Clear();
+                if (playerList[i].amIeliminated != true) 
+                {
+                    playerList[i].promptMyGesture();
+                    Console.Clear();
+                }
             }
             
             DisplayPlayerListBR();
@@ -367,7 +370,7 @@ namespace RPSLS
                     if ((playerList[i].score == lowestScore) && (playerList[i].score != highestscore))
                     {
                         playerList[i].amIeliminated = true;
-                        Console.WriteLine($"{playerList[i].name} was eliminated from the game");
+                        Console.WriteLine($"{playerList[i].name} was eliminated from the game with a score of {playerList[i].score}");
                     }
                 }
             }//Eliminates any player that would have this score;
@@ -425,11 +428,18 @@ namespace RPSLS
                         {
                             playerList[i].score++;
                         }
-                        else if (playerList[index].gesture == gestures.gestureLogic(playerList[index].gesture, playerList[i].gesture))//Current index won 
+                        else if ((playerList[index].gesture == gestures.gestureLogic(playerList[index].gesture, playerList[i].gesture)) &&(playerList[index].amIeliminated != true))//Current index won 
                         {
                             Console.WriteLine($"{playerList[i].name} lost to {playerList[index].name} with {playerList[i].gesture.gestureName} vs {playerList[index].gesture.gestureName}");
                         }
-                        else { Console.WriteLine($"Its a TIE! {playerList[i].name} used {playerList[i].gesture.gestureName} against {playerList[index].name}'s {playerList[index].gesture.gestureName}"); }
+                        else 
+                        {
+                            if ((playerList[index].amIeliminated != true)) 
+                            {
+                                Console.WriteLine($"Its a TIE! {playerList[i].name} used {playerList[i].gesture.gestureName} against {playerList[index].name}'s {playerList[index].gesture.gestureName}");
+                            }
+                             
+                        }
                     }
                 }
             }
