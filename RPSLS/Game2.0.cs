@@ -300,9 +300,10 @@ namespace RPSLS
                 List<int> playerscores = new List<int>();
                 int nsscorerequired = 0;
                 bool runthisgame = true;
+                int playersleft = numberOfPlayers;
                 while (runthisgame == true) 
                 {
-                    runthisgame = LaunchBattleRoyaleStyle(nsscorerequired, runthisgame, playerscores);
+                    runthisgame = LaunchBattleRoyaleStyle(nsscorerequired, runthisgame, playerscores, playersleft);
                 }
                 
             }//Will run battle royale logic
@@ -332,21 +333,21 @@ namespace RPSLS
 
             return runthisgame;
         }
-        private bool LaunchBattleRoyaleStyle(int nscoreRequired, bool runthisgame, List<int> playerscores) 
+        private bool LaunchBattleRoyaleStyle(int nscoreRequired, bool runthisgame, List<int> playerscores, int playersleft) 
         {
-            int playersleft = 0;
+            
             int lowestScore = 0;
             int highestscore = 0;
-            for (int i = 0; i < numberOfPlayers; i++)
+            for (int i = 0; i < playersleft; i++)
             {
                 playerList[i].promptMyGesture();
                 Console.Clear();
             }
             
             DisplayPlayerListBR();
-            calculatePointsBR();
+            calculatePointsBR(playersleft);
 
-            for (int i = 0; i < numberOfPlayers; i++)//assigning to playerscores.
+            for (int i = 0; i < playersleft; i++)//assigning to playerscores.
             {
                 if (playerList[i].amIeliminated != true) 
                 {
@@ -373,7 +374,7 @@ namespace RPSLS
 
             DisplayPlayerListBR();
             playerscores.Clear();
-
+            playersleft = 0;
             for (int i = 0; i < numberOfPlayers; i++)//Sets the number of players at the end of every round
             {
                 if (playerList[i].amIeliminated != true) 
@@ -412,7 +413,7 @@ namespace RPSLS
                 }
             }
         }
-        private void calculatePointsBR() 
+        private void calculatePointsBR(int playersleft) 
         {
             for (int i = 0; i < numberOfPlayers; i++)
             {
@@ -420,7 +421,7 @@ namespace RPSLS
                 {
                     if ((i != index) &&(playerList[i].amIeliminated != true))
                     {
-                        if (playerList[i].gesture == gestures.gestureLogic(playerList[i].gesture, playerList[index].gesture))// CURRENT i WON 
+                        if ((playerList[i].gesture == gestures.gestureLogic(playerList[i].gesture, playerList[index].gesture) && (playerList[index].amIeliminated != true)))// CURRENT i WON 
                         {
                             playerList[i].score++;
                         }
