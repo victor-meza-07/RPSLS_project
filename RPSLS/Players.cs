@@ -10,6 +10,7 @@ namespace RPSLS
         public Gestures gesture;
         public string name;
         public List<Gestures> listofGestures;
+        public bool amIeliminated;
         public Players()
         {
             listofGestures = new List<Gestures>();

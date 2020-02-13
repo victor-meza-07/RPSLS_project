@@ -15,8 +15,6 @@ namespace RPSLS
             Game game = new Game();
             System.Threading.Thread.Sleep(200);
             Game2 game2 = new Game2();
-
-
             game2.Start();
             
         }
